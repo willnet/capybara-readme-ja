@@ -158,34 +158,12 @@ end
 
 ## Capybara を Test::Unit で使う
 
-もしあなたが Rails を使っているなら、`database_cleaner` を Gemfile に追加しましょう。
+もしあなたが Rails を使っているなら、下記のコードを `test_helper.rb` に追加しましょう。`ActionDispatch::IntegrationTest`を継承している全てのテストで Capybara が利用可能になります。
 
 ```ruby
-group :test do
-  gem 'database_cleaner'
-end
-```
-
-それから、`ActionDispatch::IntegrationTest`を継承している全てのテストで Capybara を利用可能にするために、下記のコードを `test_helper.rb` に追加しましょう。
-
-```ruby
-# Transactional fixtures は Selenium によるテストではうまく動きません。Capybara は
-# 別々のサーバスレッドを使用しており、片方の transaction はもう片方から参照できない
-# ためです。そのため、テストデータベースを削除するために DatabaseCleaner を使います。
-DatabaseCleaner.strategy = :truncation
-
 class ActionDispatch::IntegrationTest
-  # 全ての integration test で Capybara の DSL を使えるようにする
+  # Capybara DSL をすべての integration テストで利用可能にする
   include Capybara::DSL
-
-  # ActiveRecord が テストを transaction でラップするのをやめさせる
-  self.use_transactional_fixtures = false
-
-  teardown do
-    DatabaseCleaner.clean       # データベースを削除
-    Capybara.reset_sessions!    # (シミュレートしている)ブラウザの状態をリセット
-    Capybara.use_default_driver # Capybara.current_driver を Capybara.default_driver に戻す
-  end
 end
 ```
 

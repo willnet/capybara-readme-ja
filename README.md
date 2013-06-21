@@ -289,7 +289,7 @@ visit('/projects')
 visit(post_comments_path(post))
 ```
 
-visit メソッドは引数を一つだけ取り、リクエストに使用するメソッドは**常に** GET です。
+visit メソッドは引数を一つだけ取り、リクエストに使用するメソッドは **常に** GET です。
 
 テストのアサーション用に[カレントパス](http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Session#current_path-instance_method)を取得することができます。
 
@@ -513,7 +513,7 @@ page.should have_content('baz')
 Capybara.default_wait_time = 5
 ```
 
-この振る舞いがあることによって気をつけて欲しいことがあります。下記の2つの命令は同じでは**ありません**。**常に**後者を使うようにしてください！
+この振る舞いがあることによって気をつけて欲しいことがあります。下記の2つの命令は同じでは **ありません** 。 **常に** 後者を使うようにしてください！
 
 ```ruby
 !page.has_xpath?('a')

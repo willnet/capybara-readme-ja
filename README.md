@@ -511,7 +511,7 @@ page.should have_content('baz')
 
 ```ruby
 Capybara.default_wait_time = 5
-```~
+```
 
 この振る舞いがあることによって気をつけて欲しいことがあります。下記の2つの命令は同じでは**ありません**。**常に**後者を使うようにしてください！
 

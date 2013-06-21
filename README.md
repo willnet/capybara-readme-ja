@@ -236,7 +236,7 @@ Capybara.use_default_driver       # デフォルトドライバに戻す
 
 RackTest は Capybara のデフォルトドライバです。これは pure Ruby で書かれていて、JavaScript の実行はサポートしていません。RackTest ドライバは直接 Rack のインタフェースに作用するので、テスト用のサーバーを立ち上げる必要はありません。つまり Rack アプリ(Rails や Sinatra、他のほとんどの Ruby フレームワークは Rack アプリです)でなければ、このドライバを使うことは出来ないということです。さらには、 RackTest ドライバはリモートのアプリのテストにも使えませんし、アプリが扱うリモートの URL にアクセスすることもできません(例: 外部サイトへのリダイレクト、外部 API、OAuth サービス)
 
-[https://github.com/jeroenvandijk/capybara-mechanize:title=capybara-mechanize] は、RackTest に似ていて、リモートのサーバにアクセス可能なドライバを提供しています。
+[capybara-mechanize](https://github.com/jeroenvandijk/capybara-mechanize) は、RackTest に似ていて、リモートのサーバにアクセス可能なドライバを提供しています。
 
 RackTest はこのように設定することが出来ます。
 

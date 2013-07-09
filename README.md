@@ -1,5 +1,7 @@
 # Capybara
 
+[![endorse](https://api.coderwall.com/willnet/endorsecount.png)](https://coderwall.com/willnet)
+
 ## これはなに
 
 [Capybara](https://github.com/jnicklas/capybara) の [README.md](https://github.com/jnicklas/capybara/blob/master/README.md) を翻訳したものです。「意味が通じること」を重視しており、正確な翻訳を意図したものではありません(なるべく正確に訳そうとは思っています)。原文が更新されていたり、翻訳の間違いを見つけたら Pull Request を送っていただけると助かります。

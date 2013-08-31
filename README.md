@@ -95,7 +95,7 @@ require 'capybara/rspec'
 下記のように spec を書けます。
 
 ```ruby
-describe "the signup process", :type => :feature do
+describe "the signin process", :type => :feature do
   before :each do
     User.make(:email => 'user@example.com', :password => 'caplin')
   end
@@ -126,7 +126,7 @@ end
 最後に、Capybara には受け入れテスト記述用のDSLもあります。
 
 ```ruby
-feature "Signing up" do
+feature "Signing in" do
   background do
     User.make(:email => 'user@example.com', :password => 'caplin')
   end

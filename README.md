@@ -6,6 +6,8 @@
 
 [Capybara](https://github.com/jnicklas/capybara) の [README.md](https://github.com/jnicklas/capybara/blob/master/README.md) を翻訳したものです。「意味が通じること」を重視しており、正確な翻訳を意図したものではありません(なるべく正確に訳そうとは思っています)。原文が更新されていたり、翻訳の間違いを見つけたら Pull Request を送っていただけると助かります。
 
+現在の翻訳は、[4f678b2bbd6ab3a6de399725ad0fd1c143f38b9f](https://github.com/jnicklas/capybara/blob/4f678b2bbd6ab3a6de399725ad0fd1c143f38b9f/README.md)を元に作成されています。
+
 ## 序文
 
 Capybara は、webアプリケーションのテストを補助するライブラリです。ユーザが実際に web アプリを扱うやり方をシミュレートします。Capybara は複数のドライバを切り替えて使うことができます。デフォルトでは Rack::Test と Selenium をサポートしており、外部の gem で Webkit をサポートしています。
@@ -191,7 +193,7 @@ end
 ```ruby
 class BlogTest < ActionDispatch::IntegrationTest
   setup do
-    Capybara.current_driver = Capybara.javascript_driver # デフォルト :selenium 
+    Capybara.current_driver = Capybara.javascript_driver # デフォルト :selenium
   end
 
   test 'shows blog posts' do

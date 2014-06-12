@@ -6,7 +6,7 @@
 
 [Capybara](https://github.com/jnicklas/capybara) の [README.md](https://github.com/jnicklas/capybara/blob/master/README.md) を翻訳したものです。「意味が通じること」を重視しており、正確な翻訳を意図したものではありません(なるべく正確に訳そうとは思っています)。原文が更新されていたり、翻訳の間違いを見つけたら Pull Request を送っていただけると助かります。
 
-現在の翻訳は、[4f678b2bbd6ab3a6de399725ad0fd1c143f38b9f](https://github.com/jnicklas/capybara/blob/4f678b2bbd6ab3a6de399725ad0fd1c143f38b9f/README.md)を元に作成されています。
+現在の翻訳は、[1edd6e5da9f41d02b1944149851b25ec4e64c210](https://github.com/jnicklas/capybara/blob/1edd6e5da9f41d02b1944149851b25ec4e64c210/README.md)を元に作成されています。
 
 ## 序文
 
@@ -246,7 +246,7 @@ RackTest はこのように設定することが出来ます。
 
 ```ruby
 Capybara.register_driver :rack_test do |app|
-  Capybara::RackTest::Driver.new(app, :headers => { 'User-Agent' => 'Capybara' })
+  Capybara::RackTest::Driver.new(app, :headers => { 'HTTP_USER_AGENT' => 'Capybara' })
 end
 ```
 
@@ -673,7 +673,7 @@ end
 
 ## Configuring and adding drivers
 
-Capybara はドライバを切り替えることが簡単にできます。また、ドライバを設定するためのAPIが用意されているし、独自のドライバを追加することが出来ます。下記は selenium ドライバに chrome を使わせる方法です
+Capybara はドライバを切り替えることが簡単にできます。また、ドライバを設定するためのAPIが用意されているし、独自のドライバを追加することが出来ます。下記は selenium ドライバの設定を上書きして chrome を使う方法です。
 
 ```ruby
 Capybara.register_driver :selenium do |app|
@@ -681,13 +681,20 @@ Capybara.register_driver :selenium do |app|
 end
 ```
 
-違う名前を付けることができ、そうすることによって簡単にブラウザを切り替えてテストできます。
+この設定に違う名前を付けることもできます。
 
 ```ruby
 Capybara.register_driver :selenium_chrome do |app|
   Capybara::Selenium::Driver.new(app, :browser => :chrome)
 end
 ```
+
+これにより、簡単にブラウザを切り替えてテストすることができます。
+
+```ruby
+Capybara.current_driver = :selenium_chrome
+```
+
 
 ブロックの戻り値は Capybara::Driver::Base の記述する API に従わなければいけませんが、Capybara::Driver::Base を継承している必要はありません。gem はこの API を、自分独自のドライバを Capybara に加えるために使えます。
 

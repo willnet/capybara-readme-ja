@@ -6,7 +6,7 @@
 
 [Capybara](https://github.com/jnicklas/capybara) の [README.md](https://github.com/jnicklas/capybara/blob/master/README.md) を翻訳したものです。「意味が通じること」を重視しており、正確な翻訳を意図したものではありません(なるべく正確に訳そうとは思っています)。原文が更新されていたり、翻訳の間違いを見つけたら Pull Request を送っていただけると助かります。
 
-現在の翻訳は、[1edd6e5da9f41d02b1944149851b25ec4e64c210](https://github.com/jnicklas/capybara/blob/1edd6e5da9f41d02b1944149851b25ec4e64c210/README.md)を元に作成されています。
+現在の翻訳は、[8f69f1072c28a5b8d6bf452110ae8e3fb632b114](https://github.com/jnicklas/capybara/blob/8f69f1072c28a5b8d6bf452110ae8e3fb632b114/README.md)を元に作成されています。
 
 ## 序文
 
@@ -254,7 +254,7 @@ end
 
 ### Selenium
 
-現在、Capybara は [Selenium 2.0(Webdriver)](http://docs.seleniumhq.org/docs/01_introducing_selenium.jsp#selenium-2-aka-selenium-webdriver) をサポートしており、Selenium RC はサポートしていません。Firefox がインストールされていた場合、設定は全てすんでおり、すぐに Selenium を使い始めることが出来ます。
+現在、Capybara は [Selenium 2.0(Webdriver)](http://docs.seleniumhq.org/docs/01_introducing_selenium.jsp#selenium-2-aka-selenium-webdriver) をサポートしており、Selenium RC はサポートしていません。Selenium を利用するためには、`selenium-webdriver` gem をインストールする必要があります。bundler を使っているのなら Gemfile にそれを追加しましょう。Firefox がインストールされていた場合、設定は全てすんでおり、すぐに Selenium を使い始めることが出来ます。
 
 **注釈:** 異なるスレッドでサーバを動かす種類のドライバは、テスト中で同一のトランザクションを共有することができません。それによりテストとテストサーバ感でデータを共有できなくなります。Transaction Fixtures の章を読んでください。
 

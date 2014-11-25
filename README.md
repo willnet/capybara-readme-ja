@@ -6,7 +6,7 @@
 
 [Capybara](https://github.com/jnicklas/capybara) の [README.md](https://github.com/jnicklas/capybara/blob/master/README.md) を翻訳したものです。「意味が通じること」を重視しており、正確な翻訳を意図したものではありません(なるべく正確に訳そうとは思っています)。原文が更新されていたり、翻訳の間違いを見つけたら Pull Request を送っていただけると助かります。
 
-現在の翻訳は、[8f69f1072c28a5b8d6bf452110ae8e3fb632b114](https://github.com/jnicklas/capybara/blob/8f69f1072c28a5b8d6bf452110ae8e3fb632b114/README.md)を元に作成されています。
+現在の翻訳は、[8100b25952aab2a966552912a1f15d65d9c66b17](https://github.com/jnicklas/capybara/blob/8100b25952aab2a966552912a1f15d65d9c66b17/README.md)を元に作成されています。
 
 ## 協力のお願い
 
@@ -15,7 +15,7 @@ Capybara の README に関連するコミットを [Issues](https://github.com/w
 この Issue に対応して頂けると大変助かります。もし対応して頂ける場合は、
 
 - 古い Issue から対応する
-- 翻訳の編集と同時に、上記の「現在の翻訳は、8f69f1072c28a5b8d6bf452110ae8e3fb632b114を元に作成されています。」の部分も編集する
+- 翻訳の編集と同時に、上記の「現在の翻訳は、8100b25952aab2a966552912a1f15d65d9c66b17を元に作成されています。」の部分も編集する
 
 の２つをご協力お願いします。
 
@@ -409,8 +409,6 @@ within(:xpath, "//li[@id='employee']") do
   fill_in 'Name', :with => 'Jimmy'
 end
 ```
-
-*注釈:* `within` はセレクタにマッチした最初の要素にアクションの範囲を限定します。
 
 fieldset や table 用の特別なメソッドがあります。fieldset は legend タグ内の id かテキスト、table は caption タグの id かテキストを見ます。
 

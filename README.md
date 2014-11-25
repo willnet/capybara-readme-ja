@@ -8,6 +8,17 @@
 
 現在の翻訳は、[8f69f1072c28a5b8d6bf452110ae8e3fb632b114](https://github.com/jnicklas/capybara/blob/8f69f1072c28a5b8d6bf452110ae8e3fb632b114/README.md)を元に作成されています。
 
+## 協力のお願い
+
+Capybara の README に関連するコミットを [Issues](https://github.com/willnet/capybara-readme-ja/issues) に自動で登録するような仕組みを作りました。([deka](https://github.com/willnet/deka) という gem を使っています)。登録されている Issue は、この訳と翻訳元に対しての差分になります。
+
+この Issue に対応して頂けると大変助かります。もし対応して頂ける場合は、
+
+- 古い Issue から対応する
+- 翻訳の編集と同時に、上記の「現在の翻訳は、8f69f1072c28a5b8d6bf452110ae8e3fb632b114を元に作成されています。」の部分も編集する
+
+の２つをご協力お願いします。
+
 ## 序文
 
 Capybara は、webアプリケーションのテストを補助するライブラリです。ユーザが実際に web アプリを扱うやり方をシミュレートします。Capybara は複数のドライバを切り替えて使うことができます。デフォルトでは Rack::Test と Selenium をサポートしており、外部の gem で Webkit をサポートしています。

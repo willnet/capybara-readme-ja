@@ -217,7 +217,7 @@ end
 
 ベースとなるクラスを Test::Unit と同じように設定しましょう。(Rails では、ベースとなるクラスが ActionDispatch::IntegrationTest 以外ということもありえます)
 
-capybara_minitest_spec という gem ([Github](https://github.com/ordinaryzelig/capybara_minitest_spec), [rubyGems.org](https://rubygems.org/gems/capybara_minitest_spec)) が、 Capybara 用の MiniTest::Spec expectations を提供しています。例
+capybara_minitest_spec という gem ([GitHub](https://github.com/ordinaryzelig/capybara_minitest_spec), [rubyGems.org](https://rubygems.org/gems/capybara_minitest_spec)) が、 Capybara 用の MiniTest::Spec expectations を提供しています。例
 
 ```ruby
 page.must_have_content('Important!')

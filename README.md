@@ -297,7 +297,7 @@ Capybara.javascript_driver = :webkit
 
 ## Navigating
 
-他のページに遷移するメソッドとして[visit](http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Session#visit-instance_method)が使えます。
+他のページに遷移するメソッドとして<tt>[visit](http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Session#visit-instance_method)</tt>が使えます。
 
 ```ruby
 visit('/projects')

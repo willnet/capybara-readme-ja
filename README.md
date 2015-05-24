@@ -41,10 +41,10 @@ Rails や Rack アプリを使っているならすぐに使えます
 
 ### セットアップ
 
-インストールするには
+CapybaraにはRuby 1.9.3以上が必要です。インストールするには、次の行をあなたのGemfileに追加して、bundle install を実行してください。
 
-```sh
-gem install capybara
+```ruby
+gem 'capybara'
 ```
 
 もし Rails を使っているなら、テストのヘルパファイルに下記の行を追記してください

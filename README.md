@@ -41,10 +41,10 @@ Rails や Rack アプリを使っているならすぐに使えます
 
 ### セットアップ
 
-インストールするには
+CapybaraにはRuby 1.9.3以上が必要です。インストールするには、次の行をあなたのGemfileに追加して、bundle install を実行してください。
 
-```sh
-gem install capybara
+```ruby
+gem 'capybara'
 ```
 
 もし Rails を使っているなら、テストのヘルパファイルに下記の行を追記してください
@@ -217,7 +217,7 @@ end
 
 ベースとなるクラスを Test::Unit と同じように設定しましょう。(Rails では、ベースとなるクラスが ActionDispatch::IntegrationTest 以外ということもありえます)
 
-capybara_minitest_spec という gem ([Github](https://github.com/ordinaryzelig/capybara_minitest_spec), [rubyGems.org](https://rubygems.org/gems/capybara_minitest_spec)) が、 Capybara 用の MiniTest::Spec expectations を提供しています。例
+capybara_minitest_spec という gem ([GitHub](https://github.com/ordinaryzelig/capybara_minitest_spec), [rubyGems.org](https://rubygems.org/gems/capybara_minitest_spec)) が、 Capybara 用の MiniTest::Spec expectations を提供しています。例
 
 ```ruby
 page.must_have_content('Important!')
@@ -297,7 +297,7 @@ Capybara.javascript_driver = :webkit
 
 ## Navigating
 
-他のページに遷移するメソッドとして[visit](http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Session#visit-instance_method)が使えます。
+他のページに遷移するメソッドとして<tt>[visit](http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Session#visit-instance_method)</tt>が使えます。
 
 ```ruby
 visit('/projects')
@@ -309,7 +309,7 @@ visit メソッドは引数を一つだけ取り、リクエストに使用す�
 テストのアサーション用に[カレントパス](http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Session#current_path-instance_method)を取得することができます。
 
 ```ruby
-current_path.should == post_comments_path(post)
+expect(current_path).to eq(post_comments_path(post))
 ```
 
 ## Clicking links and buttons
@@ -363,12 +363,12 @@ page.has_content?('foo')
 Rspecの魔法のマッチャによって下記のように書けます。
 
 ```ruby
-page.should have_selector('table tr')
-page.should have_selector(:xpath, '//table/tr')
+expect(page).to have_selector('table tr')
+expect(page).to have_selector(:xpath, '//table/tr')
 
-page.should have_xpath('//table/tr')
-page.should have_css('table tr.foo')
-page.should have_content('foo')
+expect(page).to have_xpath('//table/tr')
+expect(page).to have_css('table tr.foo')
+expect(page).to have_content('foo')
 ```
 
 ## Finding
@@ -393,7 +393,7 @@ all('a').each { |a| a[:href] }
 
 ```ruby
 find('#navigation').click_link('Home')
-find('#navigation').should have_button('Sign out')
+expect(find('#navigation')).to have_button('Sign out')
 ```
 
 ## Scoping
@@ -458,6 +458,12 @@ print page.html
 page.save_screenshot('screenshot.png')
 ```
 
+また、スクリーンショットを保存し、自動的に開くことができます。
+
+```ruby
+sage_and_open_screenshot
+```
+
 ## Matching
 
 Capybara の要素の見つけ方をカスタマイズすることができます。`Capybara.exact` と `Capybara.match` の二つの選択肢があります。
@@ -517,7 +523,7 @@ Ajax を使っている部分をテストするときに、まだページ上に
 ```ruby
 click_link('foo')
 click_link('bar')
-page.should have_content('baz')
+expect(page).to have_content('baz')
 ```
 
 もし *foo* というリンクをクリックすることが ajax のトリガーになっていて、完了したときに *bar* というリンクがページに追加されるとしたら、リンクが表示されないために *bar* リンクをクリックするのに失敗するでしょう。しかし Capybara は諦めてエラーを投げる前に、少しの間待ってリトライします。次の行でb*baz* を探すのも同様です。少しの間待ってリトライします。どれくらいの時間待つかを調整することもできます(デフォルトは2秒です)。
@@ -538,14 +544,14 @@ page.has_no_xpath?('a')
 しかし、 Capybara の Rspec マッチャは賢くてどちらの書き方もうまく扱えます。下記の二つの命令は機能的に同じです。
 
 ```ruby
-page.should_not have_xpath('a')
-page.should have_no_xpath('a')
+expect(page).not_to have_xpath('a')
+expect(page).to have_no_xpath('a')
 ```
 
 Capybara の待つ振る舞いはとても革新的で、下記のような書き方も扱えます。
 
 ```ruby
-find('#sidebar').find('h1').should have_content('Something')
+expect(find('#sidebar').find('h1')).to have_content('Something')
 ```
 
 もし JavaScript によって `#sidebar` がページから見えなくなった場合、Capybara は自動で `#sidebar` とそれが含む全ての要素をリロードします。そして AJAX リクエストによって `#sidebar` の内容が変化(`h1` のテキストが "Something" に)した場合、テストは通ります。もしこの挙動をさせたくなかったら、`Capybara.automatic_reload` を `false` にセットしてください。

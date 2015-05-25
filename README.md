@@ -6,7 +6,7 @@
 
 [Capybara](https://github.com/jnicklas/capybara) の [README.md](https://github.com/jnicklas/capybara/blob/master/README.md) を翻訳したものです。「意味が通じること」を重視しており、正確な翻訳を意図したものではありません(なるべく正確に訳そうとは思っています)。原文が更新されていたり、翻訳の間違いを見つけたら Pull Request を送っていただけると助かります。
 
-現在の翻訳は、[8100b25952aab2a966552912a1f15d65d9c66b17](https://github.com/jnicklas/capybara/blob/8100b25952aab2a966552912a1f15d65d9c66b17/README.md)を元に作成されています。
+現在の翻訳は、[dbd0d8b3ef7c4f7ce13f929b55d2d456d8033b39 ](https://github.com/jnicklas/capybara/blob/dbd0d8b3ef7c4f7ce13f929b55d2d456d8033b39/README.md)を元に作成されています。
 
 ## 協力のお願い
 

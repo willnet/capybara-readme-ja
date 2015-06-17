@@ -461,7 +461,7 @@ page.save_screenshot('screenshot.png')
 また、スクリーンショットを保存し、自動的に開くことができます。
 
 ```ruby
-sage_and_open_screenshot
+save_and_open_screenshot
 ```
 
 ## Matching

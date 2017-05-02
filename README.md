@@ -27,19 +27,13 @@ Capybara は、webアプリケーションのテストを補助するライブ�
 
 ## 主な利点
 
-### セットアップいらず
+- **セットアップいらず** Rails や Rack アプリを使っているならすぐに使えます
 
-Rails や Rack アプリを使っているならすぐに使えます
+- **直感的な API** 私たちが実際に使っている言葉が使えます
 
-### 直感的な API
+- **バックエンドを変更できる** テストを変更することなく、早い headless なブラウザを使ったり実際のブラウザを使ったりができます
 
-私たちが実際に使っている言葉が使えます
-
-### バックエンドを変更できる
-
-テストを変更することなく、早い headless なブラウザを使ったり実際のブラウザを使ったりができます
-
-### セットアップ
+## セットアップ
 
 CapybaraにはRuby 1.9.3以上が必要です。インストールするには、次の行をあなたのGemfileに追加して、bundle install を実行してください。
 
@@ -269,7 +263,7 @@ end
 
 **注釈:** 異なるスレッドでサーバを動かす種類のドライバは、テスト中で同一のトランザクションを共有することができません。それによりテストとテストサーバ感でデータを共有できなくなります。Transaction Fixtures の章を読んでください。
 
-## Capybara-webkit
+### Capybara-webkit
 
 [capybara-webkit](https://github.com/thoughtbot/capybara-webkit) は、headless なテスト用のドライバです。QtWebKit をレンダリングエンジン用に使っています。capybara-webkit は JavaScript を実行出来ます。ブラウザを全てロードすることはないので、Selenium のようなドライバよりかなり早いです。
 
@@ -285,7 +279,7 @@ gem install capybara-webkit
 Capybara.javascript_driver = :webkit
 ```
 
-## Poltergeist
+### Poltergeist
 
 [Poltergeist](https://github.com/jonleighton/poltergeist) は、Capybara と [PhantomJS](http://phantomjs.org/) とを統合する、もう一つの headless なドライバです。完全に headless なので、Xvfb が必要ありません。さらに、ページ中で起きた Javascript のエラーを検知してレポートしてくれます。
 
@@ -295,7 +289,7 @@ Capybara.javascript_driver = :webkit
 
 **注釈:** Capybara での全ての検索は case sensitive です。これは、case insensivity をサポートしていない XPath を大量に使っているためです
 
-## Navigating
+### Navigating
 
 他のページに遷移するメソッドとして<tt>[visit](http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Session#visit-instance_method)</tt>が使えます。
 
@@ -312,7 +306,7 @@ visit メソッドは引数を一つだけ取り、リクエストに使用す�
 expect(current_path).to eq(post_comments_path(post))
 ```
 
-## Clicking links and buttons
+### Clicking links and buttons
 
 フルのリファレンスはこちら: [Capybara::Node::Actions](http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Actions)
 
@@ -326,7 +320,7 @@ click_on('Link Text') # リンクかボタンどちらかをクリック
 click_on('Button Value')
 ```
 
-## Interacting with forms
+### Interacting with forms
 
 フルのリファレンスはこちら: [Capybara::Node::Actions](http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Actions)
 
@@ -343,7 +337,7 @@ attach_file('Image', '/path/to/image.jpg')
 select('Option', :from => 'Select Box')
 ```
 
-## Querying
+### Querying
 
 フルのリファレンスはこちら: [Capybara::Node::Matchers](http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Matchers)
 
@@ -371,7 +365,7 @@ expect(page).to have_css('table tr.foo')
 expect(page).to have_content('foo')
 ```
 
-## Finding
+### Finding
 
 フルのリファレンスはこちら: [Capybara::Node::Finders](http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Finders)
 
@@ -396,7 +390,7 @@ find('#navigation').click_link('Home')
 expect(find('#navigation')).to have_button('Sign out')
 ```
 
-## Scoping
+### Scoping
 
 Capybara は form 操作やリンクやボタンのクリックなどの特定のアクションを、ページの特定のエリア内で行うように制限することが可能です。within メソッドを使うことでそれができ、オプションでセレクタの種類を特定することが出来ます。
 
@@ -422,7 +416,7 @@ within_table('Employee') do
 end
 ```
 
-## Scripting
+### Scripting
 
 ドライバがサポートしていれば、簡単に JavaScript を実行できます。
 
@@ -436,7 +430,7 @@ page.execute_script("$('body').empty()")
 result = page.evaluate_script('4 + 4');
 ```
 
-## Debugging
+### Debugging
 
 下記のメソッドで、現在の状況をスナップショットとして撮って見れます。便利です。
 

@@ -1,23 +1,10 @@
 # Capybara
 
-[![endorse](https://api.coderwall.com/willnet/endorsecount.png)](https://coderwall.com/willnet)
-
 ## これはなに
 
 [Capybara](https://github.com/jnicklas/capybara) の [README.md](https://github.com/jnicklas/capybara/blob/master/README.md) を翻訳したものです。「意味が通じること」を重視しており、正確な翻訳を意図したものではありません(なるべく正確に訳そうとは思っています)。原文が更新されていたり、翻訳の間違いを見つけたら Pull Request を送っていただけると助かります。
 
-現在の翻訳は、[dbd0d8b3ef7c4f7ce13f929b55d2d456d8033b39 ](https://github.com/jnicklas/capybara/blob/dbd0d8b3ef7c4f7ce13f929b55d2d456d8033b39/README.md)を元に作成されています。
-
-## 協力のお願い
-
-Capybara の README に関連するコミットを [Issues](https://github.com/willnet/capybara-readme-ja/issues) に自動で登録するような仕組みを作りました。([deka](https://github.com/willnet/deka) という gem を使っています)。登録されている Issue は、この訳と翻訳元に対しての差分になります。
-
-この Issue に対応して頂けると大変助かります。もし対応して頂ける場合は、
-
-- 古い Issue から対応する
-- 翻訳の編集と同時に、上記の「現在の翻訳は、8100b25952aab2a966552912a1f15d65d9c66b17を元に作成されています。」の部分も編集する
-
-の２つをご協力お願いします。
+現在の翻訳は、[dbd0d8b3ef7c4f7ce13f929b55d2d456d8033b39 ](https://github.com/jnicklas/capybara/blob/dbd0d8b3ef7c4f7ce13f929b55d2d456d8033b39/README.md)を元に作成されています。新しい翻訳に追従するPull Requestをお待ちしています。
 
 ## 序文
 

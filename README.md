@@ -564,7 +564,7 @@ end
 
 ## Calling remote servers
 
-通常、Capybara は同一プロセス内の Rack アプリをテストすることを想定しています。ただ、`app_host` に値を設定することで、ネット上の web サーバとやりとりすることもできます。
+通常、Capybara は同一プロセス内の Rack アプリをテストすることを想定しています。ただ、`app_host` に値を設定することで、インターネット上の別の場所にある web サーバとやりとりすることもできます。
 
 ```ruby
 Capybara.current_driver = :selenium
@@ -579,7 +579,7 @@ visit('/')
 visit('http://www.google.com')
 ```
 
-デフォルトでは、Capybara は自動的に Rack アプリをブートしようとしてしまいます。リモートのアプリをテストするなら、Capybara の Rack サーバをオフにしたくなるかもしれません。
+デフォルトでは、Capybara は自動的に Rack アプリを起動しようとします。リモートでアプリを動かしているなら、Capybara の Rack サーバをオフにしたくなるかもしれません。
 
 ```ruby
 Capybara.run_server = false

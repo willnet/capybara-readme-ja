@@ -2,15 +2,61 @@
 
 ## これはなに
 
-[Capybara](https://github.com/jnicklas/capybara) の [README.md](https://github.com/jnicklas/capybara/blob/master/README.md) を翻訳したものです。「意味が通じること」を重視しており、正確な翻訳を意図したものではありません(なるべく正確に訳そうとは思っています)。原文が更新されていたり、翻訳の間違いを見つけたら Pull Request を送っていただけると助かります。
+[Capybara](https://github.com/teamcapybara/capybara) の [README.md](https://github.com/teamcapybara/capybara/blob/master/README.md) を翻訳したものです。「意味が通じること」を重視しており、正確な翻訳を意図したものではありません(なるべく正確に訳そうとは思っています)。原文が更新されていたり、翻訳の間違いを見つけたら Pull Request を送っていただけると助かります。
 
-現在の翻訳は、[dbd0d8b3ef7c4f7ce13f929b55d2d456d8033b39 ](https://github.com/jnicklas/capybara/blob/dbd0d8b3ef7c4f7ce13f929b55d2d456d8033b39/README.md)を元に作成されています。新しい翻訳に追従するPull Requestをお待ちしています。
+現在の翻訳は、[331c8d1811e637d793ee5557c70a0db66cad8217](https://github.com/teamcapybara/capybara/blob/331c8d1811e637d793ee5557c70a0db66cad8217/README.md) を元に作成されています。新しい翻訳に追従するPull Requestをお待ちしています。
 
 ## 序文
 
-Capybara は、webアプリケーションのテストを補助するライブラリです。ユーザが実際に web アプリを扱うやり方をシミュレートします。Capybara は複数のドライバを切り替えて使うことができます。デフォルトでは Rack::Test と Selenium をサポートしており、外部の gem で Webkit をサポートしています。
+Capybara は、webアプリケーションのテストを補助するライブラリです。ユーザが実際に web アプリを扱うやり方をシミュレートします。Capybara は複数のドライバを切り替えて使うことができます。デフォルトでは Rack::Test と Selenium をサポートしており、外部の gem で WebKit をサポートしています。
+
+### Capybara をサポートする
+
+もしあなたやあなたの会社が Capybara に価値を感じて、継続的なメンテナンスや開発を財政的に支援してくださるのでしたら、[Patreon](https://www.patreon.com/capybara)を見てください。
 
 誰かの助けが必要なら、メーリングリストで質問してみてください(Github の issue を使うのはご遠慮ください)。 http://groups.google.com/group/ruby-capybara
+
+## 目次
+
+- [主な利点](#主な利点)
+- [セットアップ](#セットアップ)
+- [Capybara を Cucumber と使う](#capybara-を-cucumber-と使う)
+- [Capybara を RSpec と使う](#capybara-を-rspec-と使う)
+- [Capybara を Test::Unit と使う](#capybara-を-testunit-と使う)
+- [Capybara を Minitest と使う](#capybara-を-minitest-と使う)
+- [Capybara を Minitest::Spec と使う](#capybara-を-minitestspec-と使う)
+- [ドライバ](#ドライバ)
+    - [ドライバを選択する](#ドライバを選択する)
+    - [RackTest](#racktest)
+    - [Selenium](#selenium)
+    - [Apparition](#apparition)
+- [DSL](#dsl)
+    - [Navigating](#navigating)
+    - [Clicking links and buttons](#clicking-links-and-buttons)
+    - [Interacting with forms](#interacting-with-forms)
+    - [Querying](#querying)
+    - [Finding](#finding)
+    - [Scoping](#scoping)
+    - [Working with windows](#working-with-windows)
+    - [Scripting](#scripting)
+    - [Modals](#modals)
+    - [Debugging](#debugging)
+- [Matching](#matching)
+    - [Exactness](#exactness)
+    - [Strategy](#strategy)
+- [Transactions and database setup](#transactions-and-database-setup)
+- [Asynchronous JavaScript (Ajax and friends)](#asynchronous-javascript-ajax-and-friends)
+- [Using the DSL elsewhere](#using-the-dsl-elsewhere)
+- [Calling remote servers](#calling-remote-servers)
+- [Using sessions](#using-sessions)
+    - [Named sessions](#named-sessions)
+    - [Using sessions manually](#using-sessions-manually)
+- [XPath, CSS and selectors](#xpath-css-and-selectors)
+- [Beware the XPath // trap](#beware-the-xpath--trap)
+- [Configuring and adding drivers](#configuring-and-adding-drivers)
+- [Gotchas:](#gotchas)
+- ["Threadsafe" mode](#threadsafe-mode)
+- [Development](#development)
 
 ## 主な利点
 
@@ -18,11 +64,13 @@ Capybara は、webアプリケーションのテストを補助するライブ�
 
 - **直感的な API** 私たちが実際に使っている言葉が使えます
 
-- **バックエンドを変更できる** テストを変更することなく、早い headless なブラウザを使ったり実際のブラウザを使ったりができます
+- **バックエンドを変更できる** テストを変更することなく、速い headless なブラウザを使ったり実際のブラウザを使ったりができます
+
+- **パワフルな同期機能** 非同期プロセスの完了を待つためのコードを書く必要はありません。
 
 ## セットアップ
 
-CapybaraにはRuby 1.9.3以上が必要です。インストールするには、次の行をあなたのGemfileに追加して、bundle install を実行してください。
+CapybaraにはRuby 2.7.0以上が必要です。インストールするには、次の行をあなたのGemfileに追加して、bundle install を実行してください。
 
 ```ruby
 gem 'capybara'
@@ -41,6 +89,12 @@ Capybara.app = MyRackApp
 ```
 
 もし JavaScript のテストがしたい、もしくはリモートのURLに対してテストをしたいときは、別のドライバを使う必要があるでしょう。
+もし Rails 5.0 以上を使っているにもかかわらず、Rails 5.1 から導入されたシステムテストを使っていないときは、 Rails のデフォルトに合わせてサーバーを Puma に変更した方が良いでしょう。
+
+```ruby
+Capybara.server = :puma # セットアップはこれで完了
+Capybara.server = :puma, { Silent: true } # テストで Puma 起動時のログを出力をしないオプション
+```
 
 ## Capybara を Cucumber と使う
 
@@ -63,7 +117,7 @@ When /I sign in/ do
 end
 ```
 
-`@javascript`タグを使うことで、ドライバを`Capybara.javascript_driver`(:selenium がデフォルト)に切り替えることができます。
+`@javascript`タグを使うことで、ドライバを`Capybara.javascript_driver`(`:selenium` がデフォルト)に切り替えることができます。
 
 ```ruby
 @javascript
@@ -74,73 +128,75 @@ Scenario: do something Ajaxy
 
 明示的にドライバを指定する`@selenium`や`@rack_test`タグも用意されています。
 
-## Capybara を RSpec と共に使う
+## Capybara を RSpec と使う
 
-下記の上を追加して(通常は`spec_helper.rb`ファイル)、RSpec 2.x 用のコードをロードしましょう。
+下記の上を追加して(通常は`spec_helper.rb`ファイル)、RSpec 3.5 以上用のコードをロードしましょう。
 
 ```ruby
 require 'capybara/rspec'
 ```
 
-もしあなたが Rails を使っているならば、Capybara の spec は `spec/features` に置きましょう。
+もしあなたが Rails を使っているならば、Capybara の spec は（[RSpec を使っている場合]((https://relishapp.com/rspec/rspec-rails/v/4-0/docs/directory-structure))） `spec/features` か `spec/system` に置きましょう。
+もしあなたが別のディレクトリに Capybara の spec を置いているなら、書いているテストの種類に応じて example groups に `type: :feature` または `type: :system` を追加してください。
 
-もしあなたが Rails を使っていないのならば、Capybara を使いたい全ての example groups に `:type => :feature` を追加する必要があります。
+もしあなたが Rails の system spec を使っているなら、使用するドライバを選ぶために[ドキュメント](https://relishapp.com/rspec/rspec-rails/docs/system-specs/system-spec#system-specs-driven-by-selenium-chrome-headless)を見てください。
+もしあなたが Rails を使っていないのならば、Capybara を使いたい全ての example groups に `type: :feature` を追加する必要があります。
 
 下記のように spec を書けます。
 
 ```ruby
-describe "the signin process", :type => :feature do
+describe "the signin process", type: :feature do
   before :each do
-    User.make(:email => 'user@example.com', :password => 'caplin')
+    User.create(email: 'user@example.com', password: 'password')
   end
 
   it "signs me in" do
     visit '/sessions/new'
     within("#session") do
-      fill_in 'Login', :with => 'user@example.com'
+      fill_in 'Email', :with => 'user@example.com'
       fill_in 'Password', :with => 'password'
     end
-    click_link 'Sign in'
+    click_button 'Sign in'
     expect(page).to have_content 'Success'
   end
 end
 ```
 
-`:js => true` を使うことで、ドライバを`Capybara.javascript_driver`(:selenium がデフォルト)に切り替えることができます。もしくは`:driver`オプションを使うと特定のドライバに切り替えることができます。
+`js: true` を使うことで、ドライバを`Capybara.javascript_driver`(`:selenium` がデフォルト)に切り替えることができます。もしくは`:driver`オプションを使うと特定のドライバに切り替えることができます。
 
 例
 
-```
-describe 'some stuff which requires js', :js => true do
+```ruby
+describe 'some stuff which requires js', js: true do
   it 'will use the default js driver'
-  it 'will switch to one specific driver', :driver => :webkit
+  it 'will switch to one specific driver', driver: :apparition
 end
 ```
 
-最後に、Capybara には受け入れテスト記述用のDSLもあります。
+Capybara には受け入れテスト記述用のDSLもあります。
 
 ```ruby
 feature "Signing in" do
   background do
-    User.make(:email => 'user@example.com', :password => 'caplin')
+    User.create(:email => 'user@example.com', :password => 'caplin')
   end
 
   scenario "Signing in with correct credentials" do
     visit '/sessions/new'
     within("#session") do
-      fill_in 'Login', :with => 'user@example.com'
+      fill_in 'Email', :with => 'user@example.com'
       fill_in 'Password', :with => 'caplin'
     end
     click_link 'Sign in'
     expect(page).to have_content 'Success'
   end
 
-  given(:other_user) { User.make(:email => 'other@example.com', :password => 'rous') }
+  given(:other_user) { User.create(:email => 'other@example.com', :password => 'rous') }
 
   scenario "Signing in as another user" do
     visit '/sessions/new'
     within("#session") do
-      fill_in 'Login', :with => other_user.email
+      fill_in 'Email', :with => other_user.email
       fill_in 'Password', :with => other_user.password
     end
     click_link 'Sign in'
@@ -150,24 +206,75 @@ end
 ```
 
 
-`feature` は実は単なる `describe ... :type => :feature` のエイリアスです。`background` は `before` 、 `scenario` は `it`、`given` と `given!` は それぞれ `let` と `let!` のエイリアスです。
+`feature` は実は単なる `describe ... type: :feature` のエイリアスです。`background` は `before` 、 `scenario` は `it`、`given` と `given!` は それぞれ `let` と `let!` のエイリアスです。
 
-## Capybara を Test::Unit で使う
-
-もしあなたが Rails を使っているなら、下記のコードを `test_helper.rb` に追加しましょう。`ActionDispatch::IntegrationTest`を継承している全てのテストで Capybara が利用可能になります。
+最後に、view spec 用の Capybara マッチャ もあります。
 
 ```ruby
-class ActionDispatch::IntegrationTest
-  # Capybara DSL をすべての integration テストで利用可能にする
-  include Capybara::DSL
+RSpec.describe "todos/show.html.erb", type: :view do
+  it "displays the todo title" do
+    assign :todo, Todo.new(title: "Buy milk")
+
+    render
+
+    expect(rendered).to have_css("header h1", text: "Buy milk")
+  end
 end
 ```
 
-もしあなたが Rails を使っていないのなら、Capybara テスト用のベースとなるクラスを下記のように定義します。
+**注釈: 「capybara/rspec」を require する場合、Capybara::DSL メソッドである `all`/`within` と同じ名前のビルトイン RSpec マッチャ間の名前衝突を避けるために、いくつかのプロキシメソッドがインストールされます。**
+**「capybara/rspec」を require しないのなら、RSpec と「capybara/dsl」を require した後に「capybara/rspec/matcher_proxies」を require することで、名前衝突回避用のプロキシメソッドをインストールできます。**
+
+## Capybara を Test::Unit と使う
+
+`Test::Unit` を使っているなら、Capybara テスト用のベースとなるクラスを下記のように定義します。
 
 ```ruby
 class CapybaraTestCase < Test::Unit::TestCase
   include Capybara::DSL
+
+  def teardown
+    Capybara.reset_sessions!
+    Capybara.use_default_driver
+  end
+end
+```
+
+## Capybara を Minitest と使う
+
+* もしあなたが Rails のシステムテストを使っているなら、使用するドライバを選ぶためにドキュメントを見てください。
+
+* もしあなたが Rails を使っているにもかかわらず、Rails のシステムテストを使っていないのなら、下記のコードを `test_helper.rb` に追加しましょう。
+`ActionDispatch::IntegrationTest`を継承している全てのテストで Capybara が利用可能になります。
+
+
+```ruby
+require 'capybara/rails'
+require 'capybara/minitest'
+
+class ActionDispatch::IntegrationTest
+  # 全てのテストで Capybara DSL を利用可能にします
+  include Capybara::DSL
+  # `assert_*` メソッドが Minitest assertions のように振る舞うようにします
+  include Capybara::Minitest::Assertions
+
+  # テスト間のセッションとドライバをリセットします
+  teardown do
+    Capybara.reset_sessions!
+    Capybara.use_default_driver
+  end
+end
+```
+
+
+* もしあなたが Rails を使っていないのなら、Capybara のテスト用のベースとなるクラスを下記のように定義します。
+
+```ruby
+require 'capybara/minitest'
+
+class CapybaraTestCase < Minitest::Test
+  include Capybara::DSL
+  include Capybara::Minitest::Assertions
 
   def teardown
     Capybara.reset_sessions!
@@ -194,11 +301,9 @@ class BlogTest < ActionDispatch::IntegrationTest
 end
 ```
 
-## Capybara を MiniTest::Spec で使う
+## Capybara を Minitest::Spec と使う
 
-ベースとなるクラスを Test::Unit と同じように設定しましょう。(Rails では、ベースとなるクラスが ActionDispatch::IntegrationTest 以外ということもありえます)
-
-capybara_minitest_spec という gem ([GitHub](https://github.com/ordinaryzelig/capybara_minitest_spec), [rubyGems.org](https://rubygems.org/gems/capybara_minitest_spec)) が、 Capybara 用の MiniTest::Spec expectations を提供しています。例
+Minitest 用の上記手順に従った上で、さらに capybar/minitest/spec を require します。
 
 ```ruby
 page.must_have_content('Important!')
@@ -210,19 +315,19 @@ Capybara では、同じ DSL で様々なブラウザや headless なドライ�
 
 ### ドライバを選択する
 
-デフォルトでは、Capybara は `:rack_test` ドライバを使います。`:rack_test` は速いけれど、JavaScript をサポートしていないのと、Rack アプリの外側から HTTP リソースにアクセス出来ないという制限があります。これらの制限を回避するには、欲しい機能に合わせて別のデフォルトドライバを設定します。例えばもし Selenium で全てのテストを走らせたければ、下記のように書けます。
+デフォルトでは、Capybara は `:rack_test` ドライバを使います。`:rack_test` は速いけれど、JavaScript をサポートしていないのと、Rack アプリの外側からリモート API や OAuth サービスのような HTTP リソースにアクセス出来ないという制限があります。これらの制限を回避するには、欲しい機能に合わせて別のデフォルトドライバを設定します。例えばもし Selenium で全てのテストを走らせたければ、下記のように書けます。
 
 ```ruby
-Capybara.default_driver = :selenium
+Capybara.default_driver = :selenium # :selenium_chrome と :selenium_chrome_headless も登録されます
 ```
 
-しかし、もしあなたが Rspec か Cucumber を使っているのなら、早い `:rack_test` を default_driver のままにしておいて、JavaScript を扱う必要のあるテストにだけ それぞれ `:js => true` もしくは `@javascript` でマークを付けることもできます。デフォルトでは、JavaScript のテストは `:selenium` ドライバが使われます。`Capybara.javascript_driver`に代入することで変更可能です。
+しかし、もしあなたが Rspec か Cucumber を使っているのなら（そして JS なしであなたのアプリが正しく動作しているのなら）、より速い `:rack_test` を default_driver のままにしておいて、JavaScript を扱う必要のあるテストにだけ それぞれ `js: true` もしくは `@javascript` でマークを付けることもできます。デフォルトでは、JavaScript のテストは `:selenium` ドライバが使われます。`Capybara.javascript_driver`に代入することで変更可能です。
 
 ドライバを一時的に変更することもできます(一般的に Before/setup と After/teardown ブロックで使われます)
 
 ```ruby
-Capybara.current_driver = :webkit # 一時的に別のドライバを設定
-... tests ...
+Capybara.current_driver = :apparition # 一時的に別のドライバを設定
+# ここでテストする
 Capybara.use_default_driver       # デフォルトドライバに戻す
 ```
 
@@ -238,41 +343,36 @@ RackTest はこのように設定することが出来ます。
 
 ```ruby
 Capybara.register_driver :rack_test do |app|
-  Capybara::RackTest::Driver.new(app, :headers => { 'HTTP_USER_AGENT' => 'Capybara' })
+  Capybara::RackTest::Driver.new(app, headers: { 'HTTP_USER_AGENT' => 'Capybara' })
 end
 ```
 
-詳しくは "ドライバを設定、追加する" のセクションを見てください。
+詳しくは "Configuring and adding drivers" のセクションを見てください。
 
 ### Selenium
 
-現在、Capybara は [Selenium 2.0(Webdriver)](http://docs.seleniumhq.org/docs/01_introducing_selenium.jsp#selenium-2-aka-selenium-webdriver) をサポートしており、Selenium RC はサポートしていません。Selenium を利用するためには、`selenium-webdriver` gem をインストールする必要があります。bundler を使っているのなら Gemfile にそれを追加しましょう。Firefox がインストールされていた場合、設定は全てすんでおり、すぐに Selenium を使い始めることが出来ます。
+現在、Capybara は [Selenium 3.5以上(Webdriver)](http://docs.seleniumhq.org/docs/01_introducing_selenium.jsp#selenium-2-aka-selenium-webdriver) をサポートしています。Selenium を利用するためには、`selenium-webdriver` gem をインストールする必要があります。bundler を使っているのなら Gemfile にそれを追加しましょう。
 
-**注釈:** 異なるスレッドでサーバを動かす種類のドライバは、テスト中で同一のトランザクションを共有することができません。それによりテストとテストサーバ感でデータを共有できなくなります。Transaction Fixtures の章を読んでください。
+Capybara は Selenium を使用する名前付きのドライバを数多く用意しています。それらが以下です:
 
-### Capybara-webkit
+* :selenium                 => Firefox を動作させる Selenium
+* :selenium_headless        => headless な設定で Firefox を動作させる Selenium
+* :selenium_chrome          => Chrome を動作させる Selenium
+* :selenium_chrome_headless => headless な設定で Chrome を動作させる Selenium
 
-[capybara-webkit](https://github.com/thoughtbot/capybara-webkit) は、headless なテスト用のドライバです。QtWebKit をレンダリングエンジン用に使っています。capybara-webkit は JavaScript を実行出来ます。ブラウザを全てロードすることはないので、Selenium のようなドライバよりかなり早いです。
+これらはローカルデスクトップにおける設定 (関連するソフトウェアのインストールを含む) では動作するはずですが、追加のオプションをブラウザに渡す必要のある CI 環境で使用する場合、カスタマイズが必要になることがあります。
 
-このようにインストールして
+**注釈:** 異なるスレッドでサーバを動かす種類のドライバは、テスト中で同一のトランザクションを共有することができません。それによりテストとテストサーバ感でデータを共有できなくなります。[トランザクションとデータベースのセットアップ](#transactions-and-database-setup)の章を読んでください。
 
-```sh
-gem install capybara-webkit
-```
+### Apparition
 
-このように設定すると使えます。
-
-```ruby
-Capybara.javascript_driver = :webkit
-```
-
-### Poltergeist
-
-[Poltergeist](https://github.com/jonleighton/poltergeist) は、Capybara と [PhantomJS](http://phantomjs.org/) とを統合する、もう一つの headless なドライバです。完全に headless なので、Xvfb が必要ありません。さらに、ページ中で起きた Javascript のエラーを検知してレポートしてくれます。
+[Apparition ドライバ]((https://github.com/twalpole/apparition))は、ヘッドレスな設定でもそうでない設定でも Chrome を使ってテストを実行できる新しいドライバです。モダン JS/CSS を使えるようにしつつ、[Poltergeist ドライバ API](https://github.com/teampoltergeist/poltergeist) および [capybara-webkit API](https://github.com/thoughtbot/capybara-webkit)との下位互換性を提供しています。CDP を使用して Chrome と通信するため、chromedriver が不要になります。このドライバは Capybara の現在の開発者によって開発されており、最新のカピバラのリリースに追従するよう努められています。v1.0になったら teamcapybara のリポジトリにおそらく移動されるでしょう。
 
 ## DSL
 
 完全なリファレンスは [rubydoc.info](http://rubydoc.info/github/jnicklas/capybara/master) で利用可能です。
+
+**注釈: デフォルトでは、Capybara は visible 要素のみを検索します。実際のユーザーは目に見えない要素を操作することができないためです。**
 
 **注釈:** Capybara での全ての検索は case sensitive です。これは、case insensivity をサポートしていない XPath を大量に使っているためです
 
@@ -287,7 +387,7 @@ visit(post_comments_path(post))
 
 visit メソッドは引数を一つだけ取り、リクエストに使用するメソッドは **常に** GET です。
 
-テストのアサーション用に[カレントパス](http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Session#current_path-instance_method)を取得することができます。
+**注釈**: `current_path` の値を直接テストすることで、現在のパスを assert することもできます。しかし、 `have_current_path` マッチャを使う方が、前のアクション (`click_link` など) が完了していることを保証するCapybara の[待機動作](#asynchronous-javascript-ajax-and-friends)を利用するため、より安全です。
 
 ```ruby
 expect(current_path).to eq(post_comments_path(post))
@@ -295,7 +395,7 @@ expect(current_path).to eq(post_comments_path(post))
 
 ### Clicking links and buttons
 
-フルのリファレンスはこちら: [Capybara::Node::Actions](http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Actions)
+フルのリファレンスはこちら: [Capybara::Node::Actions](http://rubydoc.info/github/teamcapybara/capybara/master/Capybara/Node/Actions)
 
 リンクやボタンを押してwebアプリと通信することが出来ます。Capybara は自動でリダイレクトに対応し、ボタンに関連するフォームをサブミットします。
 
@@ -309,7 +409,7 @@ click_on('Button Value')
 
 ### Interacting with forms
 
-フルのリファレンスはこちら: [Capybara::Node::Actions](http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Actions)
+フルのリファレンスはこちら: [Capybara::Node::Actions](http://rubydoc.info/github/teamcapybara/capybara/master/Capybara/Node/Actions)
 
 フォーム要素を操作するツールがたくさんあります。
 
@@ -321,12 +421,12 @@ choose('A Radio Button')
 check('A Checkbox')
 uncheck('A Checkbox')
 attach_file('Image', '/path/to/image.jpg')
-select('Option', :from => 'Select Box')
+select('Option', from: 'Select Box')
 ```
 
 ### Querying
 
-フルのリファレンスはこちら: [Capybara::Node::Matchers](http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Matchers)
+フルのリファレンスはこちら: [Capybara::Node::Matchers](http://rubydoc.info/github/teamcapybara/capybara/master/Capybara/Node/Matchers)
 
 Capybara はページに特定の要素が存在しているかを調べることが出来るオプションを豊富に持っており、かつそれらの要素の操作もできます。
 
@@ -354,21 +454,33 @@ expect(page).to have_content('foo')
 
 ### Finding
 
-フルのリファレンスはこちら: [Capybara::Node::Finders](http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Finders)
+フルのリファレンスはこちら: [Capybara::Node::Finders](http://rubydoc.info/github/teamcapybara/capybara/master/Capybara/Node/Finders)
 
 特定の要素を探して操作することが出来ます。
 
 ```ruby
 find_field('First Name').value
-find_link('Hello').visible?
+find_field(id: 'my_field').value
+find_link('Hello', :visible => :all).visible?
+find_link(class: ['some_class', 'some_other_class'], :visible => :all).visible?
+
 find_button('Send').click
+find_button(value: '1234').click
 
 find(:xpath, "//table/tr").click
 find("#overlay").find("h1").click
 all('a').each { |a| a[:href] }
 ```
 
-*注釈:* find は、Ajax の章で説明されているように、要素がページに表示されるのを待ちます。もし要素が現れなければエラーを吐きます。
+追加の属性/プロパティで要素を検索する必要がある場合は、フィルター ブロックを渡すこともできます。これは、通常の待機動作内でチェックされます。
+これを頻繁に使用する必要がある場合は、[カスタム セレクター](http://www.rubydoc.info/github/teamcapybara/capybara/Capybara#add_selector-class_method) を追加するか、[既存のセレクタにフィルターを追加する](http://www.rubydoc.info/github/teamcapybara/capybara/Capybara#modify_selector-class_method)のが良いでしょう。
+
+```ruby
+find_field('名'){ |el| el['データ-xyz'] == '123'}
+find("#img_loading"){ |img| img['complete'] == true }
+```
+
+**注釈:** `find` は、Ajax の章で説明されているように、要素がページに表示されるのを待ちます。もし要素が現れなければエラーを吐きます。
 
 これらの要素は Capybara の DSL メソッドを全て使え、ページの箇所を特定して DSL の作用する場所を制限することが出来ます。
 
@@ -379,15 +491,15 @@ expect(find('#navigation')).to have_button('Sign out')
 
 ### Scoping
 
-Capybara は form 操作やリンクやボタンのクリックなどの特定のアクションを、ページの特定のエリア内で行うように制限することが可能です。within メソッドを使うことでそれができ、オプションでセレクタの種類を特定することが出来ます。
+Capybara は form 操作やリンクやボタンのクリックなどの特定のアクションを、ページの特定のエリア内で行うように制限することが可能です。<tt>[within](http://rubydoc.info/github/teamcapybara/capybara/master/Capybara/Session#within-instance_method)</tt> メソッドを使うことでそれができ、オプションでセレクタの種類を特定することが出来ます。
 
 ```ruby
 within("li#employee") do
-  fill_in 'Name', :with => 'Jimmy'
+  fill_in 'Name', with: 'Jimmy'
 end
 
 within(:xpath, "//li[@id='employee']") do
-  fill_in 'Name', :with => 'Jimmy'
+  fill_in 'Name', with: 'Jimmy'
 end
 ```
 
@@ -395,11 +507,26 @@ fieldset や table 用の特別なメソッドがあります。fieldset は leg
 
 ```ruby
 within_fieldset('Employee') do
-  fill_in 'Name', :with => 'Jimmy'
+  fill_in 'Name', with: 'Jimmy'
 end
 
 within_table('Employee') do
-  fill_in 'Name', :with => 'Jimmy'
+  fill_in 'Name', with: 'Jimmy'
+end
+```
+
+### Working with windows
+
+Capybara には、ウィンドウの検索と切り替えを簡単にする方法がいくつか用意されています。
+
+```ruby
+facebook_window = window_opened_by do
+  click_button 'Like'
+end
+within_window facebook_window do
+  find('#login_email').set('a@example.com')
+  find('#login_password').set('qwerty')
+  click_button 'Submit'
 end
 ```
 
@@ -411,10 +538,58 @@ end
 page.execute_script("$('body').empty()")
 ```
 
-簡単な式であれば、script の結果を受け取ることが出来ます。複雑な式だとうまくいかないかもしれません。
+簡単な式であれば、script の結果を受け取ることが出来ます。
 
 ```ruby
 result = page.evaluate_script('4 + 4');
+```
+
+より複雑な script の場合は、それらを 1 つの式として記述する必要があります。
+
+```ruby
+result = page.evaluate_script(<<~JS, 3, element)
+  (function(n, el){
+    var val = parseInt(el.value, 10);
+    return n+val;
+  })(arguments[0], arguments[1])
+JS
+```
+
+### Modals
+
+ドライバーがサポートしていれば、アラート、確認、プロンプトに対して、受け入れ(accept)、無視(dismiss)、応答(respond)することができます。
+
+アラートを生成するコードをブロックでラップすることにより、アラート メッセージを受け入れ(accept)、無視(dismiss)できます。
+
+```ruby
+accept_alert do
+  click_link('Show Alert')
+end
+```
+
+確認のモーダルを生成するコードをブロックでラップすることで、確認を受け入れ(accept)、無視(dismiss)できます。
+
+```ruby
+dismiss_confirm do
+  click_link('Show Confirm')
+end
+```
+
+プロンプトを受け入れ(accept)、無視(dismiss)できます。また、応答のモーダルに入力するテキストを提供することもできます。
+
+```ruby
+accept_prompt(with: 'Linus Torvalds') do
+  click_link('Show Prompt About Linux')
+end
+```
+
+すべてのモーダルメソッドは、提示されたメッセージを返します。したがって、戻り値を変数に代入することによりプロンプトメッセージにアクセスできます:
+
+```ruby
+message = accept_prompt(with: 'Linus Torvalds') do
+  click_link('Show Prompt About Linux')
+end
+expect(message).to eq('Who is the chief architect of Linux?')
 ```
 
 ### Debugging
@@ -445,13 +620,16 @@ page.save_screenshot('screenshot.png')
 save_and_open_screenshot
 ```
 
+スクリーンショットは、アプリのディレクトリからの相対パスである `Capybara.save_path` に保存されます。
+`capybara/rails` を require している場合、 `Capybara.save_path` はデフォルトで `tmp/capybara` になります。
+
 ## Matching
 
 Capybara の要素の見つけ方をカスタマイズすることができます。`Capybara.exact` と `Capybara.match` の二つの選択肢があります。
 
 ### Exactness
 
-`Capybara.exact` と `exact` オプションは XPath gem の内部で使われている `is` に影響します。`exact` が true のとき、全ての `is` 式が完全一致になります。 false のときは部分一致を許可します。この方法で部分一致を許可するかどうか指定できます。デフォルトでは `Capybara.exact` は false です。
+`Capybara.exact` と `exact` オプションは XPath gem の内部で使われている `is` に影響します。`exact` が true のとき、全ての `is` 式が完全一致になります。 false のときは部分一致を許可します。Capybaraに組み込まれている多くのセレクタが `is` を使用しています。 この方法で部分一致を許可するかどうか指定できます。デフォルトでは `Capybara.exact` は false です。
 
 例:
 
@@ -475,25 +653,13 @@ click_link("Password", exact: false) # オーバライドできる
 
 ## Transactions and database setup
 
+**注釈:** Rails 5.1 以上では、アプリとテストスレッドの間でデータベース接続を「安全に」共有します。したがって、もしあなたが Rails 5.1 以降を使用しているのなら、このセクションを無視してよいはずです。
+
 いくつかの Capybara のドライバは実際の HTTP サーバに対して動きます。Capybara はこれに対応しており、テストプロセスと同一のプロセス(ただし別スレッド)で HTTP サーバを走らせます。Selenium は HTTP サーバを使うドライバの一つです。RackTest は違います。
 
-もしあなたが SQL データベースを使っているのなら、それぞれのテストをトランザクション内で実行し、テストの終わりにロールバックするやり方がよく使われます。例えば rspec-rails はそれをデフォルトで実行しています。トランザクションはスレッドをまたがって共有できないので、もし HTTP サーバを使用するドライバを使っているのなら、あなたがデータベースに入れたデータを Capybara からは確認することができません。
+もしあなたが SQL データベースを使っているのなら、全てのテストを1つのトランザクション内で実行し、そのトランザクションをテストの終わりにロールバックする方法が一般的です。例えば rspec-rails では、デフォルトでこの方法が採用されています。トランザクションは通常、スレッド間で共有できないので、もし HTTP サーバを使用するドライバを使っているのなら、テストコード上であなたがデータベースに入れたデータは Capybara から見ることができません。
 
-Cucumber はトランザクションの代わりに truncation を使うことでこの問題に対応しています。すなわち、それぞれのテストの後に全てのデータベースを空にしているのです。[database_cleaner](https://github.com/bmabey/database_cleaner) のような gem を使うことで、同じような振る舞いをさせることができます。
-
-ORM に、全てのスレッドで同じトランザクションを使わせることも可能です。これはスレッドセーフ的な課題があり、奇妙な現象が起こる可能性があります。この方法は気をつけて使いましょう。下記のモンキーパッチを使うと ActiveRecord でスレッド間で同一トランザクションができます。
-
-```ruby
-class ActiveRecord::Base
-  mattr_accessor :shared_connection
-  @@shared_connection = nil
-
-  def self.connection
-    @@shared_connection || retrieve_connection
-  end
-end
-ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
-```
+Cucumber はトランザクションの代わりに truncation を使うことでこの問題に対応しています。すなわち、それぞれのテストの後に全てのデータベースを空にしているのです。[database_cleaner](https://github.com/DatabaseCleaner/database_cleaner) のような gem を使うことで、同じような振る舞いをさせることができます。
 
 ## Asynchronous JavaScript (Ajax and friends)
 
@@ -516,11 +682,27 @@ Capybara.default_max_wait_time = 5
 この振る舞いがあることによって気をつけて欲しいことがあります。下記の2つの命令は同じでは **ありません** 。 **常に** 後者を使うようにしてください！
 
 ```ruby
-!page.has_xpath?('a')
-page.has_no_xpath?('a')
+# `visit` の結果ページが読み込まれるドライバを使っているとします
+# Capybara.predicates_wait は `true` で
+# 1秒後に AJAX によって `a` タグが削除されるページを考えてみてください
+visit(some_path)
+!page.has_xpath?('a')  # is false
+page.has_no_xpath?('a')  # is true
 ```
 
-前者は、コンテンツがまだ削除されていない場合すぐに失敗します。後者だけが非同期プロセスによってコンテンツがページから削除されるのを待ちます。
+最初の式:
+
+* `has_xpath?('a')` は、`visit` が戻り値を返した直後に呼び出されます。リンクはまだ削除されていないため、`true` になります。
+* Capybara は成功した predicates/assertions を待たないため、**`has_xpath?` はすぐに `true` を返します**。
+* 式は `false` を返します (先頭の `!` で否定されているため)。
+
+2 番目の式:
+
+* `has_no_xpath?('a')` は、`visit` が戻り値を返した直後に呼び出されます。リンクがまだ削除されていないため、`false`になります。
+* Capybara は失敗した predicates/assertions を待つため、**`has_no_xpath?` はすぐに `false` を返しません**。
+* Capybara は、定義された `default_max_wait_time` の秒数の間、 predicate/assertion を繰り返し再チェックします。
+* 1秒後、predicate（この場合 `has_no_xpath?('a')` ）は `true` に変わります (リンクが削除されたため)。
+* 式は `true` を返します。
 
 しかし、 Capybara の Rspec マッチャは賢くてどちらの書き方もうまく扱えます。下記の二つの命令は機能的に同じです。
 
@@ -573,7 +755,7 @@ Capybara.app_host = 'http://www.google.com'
 visit('/')
 ```
 
-**注釈:** デフォルトドライバ(rack_test)はリモートサーバに対応していません。対応しているドライバであれば、指定したURLに直接アクセスすることができます。
+**注釈:** デフォルトドライバ(`:rack_test`)はリモートサーバに対応していません。対応しているドライバであれば、指定したURLに直接アクセスすることができます。
 
 ```ruby
 visit('http://www.google.com')
@@ -587,6 +769,26 @@ Capybara.run_server = false
 
 ## Using the sessions manually
 
+Capybara は名前付きセッション (指定されていない場合は `:default`) を扱うことができ、複数のセッションが同じドライバとテストアプリのインスタンスを使って通信できるようにします。もし今使用しているドライバとテストアプリのインスタンスを使用している特定の名前のセッションが見つからない場合、今使用しているドライバを使用して新しいセッションが作成されます。
+
+### Named sessions
+
+別のセッションで操作を行って、前のセッションに戻ってくるには下記のようにします。
+
+```ruby
+Capybara.using_session("Bob's session") do
+  # Bob のブラウザセッションで何かする
+end
+# 前のセッションに戻ってくる
+```
+
+永久的に現在のセッションを別のセッションに切り替えるには下記のようにします。
+
+```ruby
+Capybara.session_name = "some other session"
+```
+
+### Using sessions manually
 
 [Session](http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Session) を手動でインスタンス化して扱うことができます。
 
@@ -594,11 +796,11 @@ Capybara.run_server = false
 require 'capybara'
 
 session = Capybara::Session.new(:webkit, my_rack_app)
-session.within("//form[@id='session']") do
-  session.fill_in 'Login', :with => 'user@example.com'
+session.within("form#session") do
+  session.fill_in 'Email', :with => 'user@example.com'
   session.fill_in 'Password', :with => 'password'
 end
-session.click_link 'Sign in'
+session.click_button 'Sign in'
 ```
 
 ## XPath, CSS and selectors
@@ -606,23 +808,25 @@ session.click_link 'Sign in'
 Capybara は入力したセレクタの種類を推測するようなことはしません。デフォルトでは常に CSS を使用します。もし XPath が使いたいのであれば、下記のようにする必要があります。
 
 ```ruby
-within(:xpath, '//ul/li') { ... }
-find(:xpath, '//ul/li').text
-find(:xpath, '//li[contains(.//a[@href = "#"]/text(), "foo")]').value
+within(:xpath, './/ul/li') { ... }
+find(:xpath, './/ul/li').text
+find(:xpath, './/li[contains(.//a[@href = "#"]/text(), "foo")]').value
 ```
 
 もしくはデフォルトのセレクタを XPath にすることもできます。
 
 ```ruby
 Capybara.default_selector = :xpath
-find('//ul/li').text
+find('.//ul/li').text
 ```
 
-カスタムセレクタを追加することもできます。これは同じようなセレクタをよく使っている場合に便利です。
+Capybara には、他にも多くのビルトインセレクタ型が用意されています。ビルトインセレクタの全一覧とそれに適用できるフィルタは、[build-in selectors](https://www.rubydoc.info/github/teamcapybara/capybara/Capybara/Selector)で確認できます。
+
+Capybara はカスタムセレクタを追加することもできます。これは同じようなセレクタをよく使っている場合に便利です。下記の例はとてもシンプルですが、ここに示している以外にも多くの機能が利用できます。より詳しい例については Capybara のビルトインセレクタの定義を参照してください。
 
 ```ruby
-Capybara.add_selector(:id) do
-  xpath { |id| XPath.descendant[XPath.attr(:id) == id.to_s] }
+Capybara.add_selector(:my_attribute) do
+  xpath { |id| XPath.descendant[XPath.attr(:my_attribute) == id.to_s] }
 end
 
 Capybara.add_selector(:row) do
@@ -637,9 +841,9 @@ end
 xpath メソッドに渡したブロックは、XPath 形式の String か、もしくは XPath gem を通して生成されたものを返さなければいけません。上記の設定により下記のようにカスタムセレクタを使うことができるようになります。
 
 ```ruby
-find(:id, 'post_123')
-find(:row, 3)
-find(:flash_type, :notice)
+find(:my_attribute, 'post_123') # マッチする属性を持つ要素を見つける
+find(:row, 3) # table row の body の 3番目の row を見つける
+find(:flash_type, :notice) # 'flash' という id を持ち、 'notice' という class を持つ要素を見つける
 ```
 
 ## Beware the XPath // trap
@@ -680,6 +884,7 @@ end
 この設定に違う名前を付けることもできます。
 
 ```ruby
+# 注釈: Capybara はこれをデフォルトで登録します。
 Capybara.register_driver :selenium_chrome do |app|
   Capybara::Selenium::Driver.new(app, :browser => :chrome)
 end
@@ -701,9 +906,36 @@ Capybara.current_driver = :selenium_chrome
 ## Gotchas
 
 * テストスレッドから session と request にアクセスすることはできません。response へのアクセスは限定されています。いくつかのドライバは response header と HTTP status code にアクセスできますが、アクセスできないドライバ(例: selenium)もあります。
-* Rails の統合テストを使っていないので、Rails 特有のもの(例: controller)へアクセスすることは出来ません。
-* 時間の固定: 現在時刻に依存したフィーチャをうまく動かすために、モックを使うのは一般的なやりかたです。しかし問題が起こることがあります。それは Capybara の Ajax のタイミングがシステムの時間を使っているせいで、failure な時に Capybara はタイムアウトせずにハングってしまいます。時間を止める機能でなく、時間を移動させる機能であればうまくいきます。[Timecop](https://github.com/travisjeffery/timecop) は両方の機能が使えます。
-* Rack::Test を使っているときは、URL で visit しているかどうかチェックするべきです。たとえば、session は posts_path と posts_url で別々になります。もし Action Mailer の中で URL を使っているとしたら、default_url_options を Rails のデフォルトの www.example.com に設定しましょう。
+* Rails の統合テストを使っていないので、Rails 特有のもの(例: `controller`)へアクセスすることは出来ません。
+* 時間の固定: 現在時刻に依存したフィーチャをうまく動かすために、モックを使うのは一般的なやりかたです。しかし、単調なプロセスの時刻へのアクセスをサポートがない ruby と platform の組み合わせにおいては問題が起こることがあります。それは Capybara の Ajax のタイミングがシステムの時間を使っているせいで、failure な時に Capybara はタイムアウトせずにハングってしまいます。時間を止める機能でなく、時間を移動させる機能であればうまくいきます。[Timecop](https://github.com/travisjeffery/timecop) は両方の機能が使えます。
+* Rack::Test を使っているときは、URL で visit しているかどうかチェックするべきです。たとえば、session は `posts_path` と `posts_url` で別々になります。もし Action Mailer の中で絶対 URL を使っているとしたら、`default_url_options` を Rails のデフォルトの `www.example.com` に設定しましょう。
+* サーバーのエラーは、サーバースレッドを開始するセッションでのみ発生します。もしあなたが複数のセッションを使用して特定のサーバーエラーをテストしているのなら、最初のセッションを使用したエラー (通常は `:default`)に対するテストになっているかどうかを確認してください。
+* WebMock が有効になっている場合、「開いているファイルが多すぎます」というエラーが表示されることがあります。単純な `page.find` 呼び出しの結果、タイムアウトが起こるまで何千もの HTTP リクエストが発生するかもしれません。デフォルトでは、WebMock は新しいコネクションを生成するごとにリクエストを送信します。この問題を回避するには、[WebMock の `net_http_connect_on_start: true` パラメータを有効にする](https://github.com/bblimke/webmock/blob/master/README.md#connecting-on-nethttpstart)必要があるかもしれません。
+
+## "Threadsafe" mode
+
+通常モードでは、Capybara の設定オプションのほとんどはグローバルに設定されるため、複数のセッションを使用していて、1つのセッションのみの設定を変更したいような場合に、問​​題を引き起こす可能性があります。提供する
+このような例をサポートするため、 Capybara は、"スレッドセーフ"モードを提供するようになりました。下記のようにすることで有効になります。
+
+```ruby
+Capybara.threadsafe = true
+```
+
+この設定は、セッションが作られる前にのみ変更できます。"スレッドセーフ"モードでは、下記のように Capybara の振る舞いが変化します。
+
+* ほとんどのオプションはセッションごとに設定できるようになりました。これらはセッションの作成時または作成後に設定できます。セッション作成時点でのグローバルな各オプションはデフォルトのままです。セッション固有 **ではない** オプションは次のとおりです。`app`、`reuse_server`、`default_driver`、`javascript_driver`、`threadsafe`。`register_driver` と `register_server` によって登録されたドライバとサーバーもグローバルになります。
+
+```ruby
+my_session = Capybara::Session.new(:driver, some_app) do |config|
+  config.automatic_label_click = true # my_session のみに設定
+end
+
+my_session.config.default_max_wait_time = 10 # my_session のみに設定
+Capybara.default_max_wait_time = 2 # my_session の default_max_wait を変更しない
+```
+
+* `current_driver` と `session_name` はスレッド固有です。つまり、 `using_session` と
+ `using_driver` も現在のスレッドにのみ影響するオプションということになります。
 
 ## Development
 
@@ -711,7 +943,8 @@ Capybara.current_driver = :selenium_chrome
 
 ```sh
 bundle install
-bundle exec rake  # run the test suite
+bundle exec rake  # Firefox でテストスイートを実行します - `geckodriver` をインストールする必要があります
+bundle exec rake spec_chrome # Chrome でテストスイートを実行します - `chromedriver` をインストールする必要があります
 ```
 
 issue や pull request の送り方は [CONTRIBUTING.md](https://github.com/jnicklas/capybara/blob/master/CONTRIBUTING.md) に書いてあります。

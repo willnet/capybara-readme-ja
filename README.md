@@ -242,7 +242,7 @@ end
 
 ## Capybara を Minitest と使う
 
-* もしあなたが Rails のシステムテストを使っているなら、使用するドライバを選ぶためにドキュメントを見てください。
+* もしあなたが Rails のシステムテストを使っているなら、使用するドライバを選ぶためにRailsのドキュメントを見てください。
 
 * もしあなたが Rails を使っているにもかかわらず、Rails のシステムテストを使っていないのなら、下記のコードを `test_helper.rb` に追加しましょう。
 `ActionDispatch::IntegrationTest`を継承している全てのテストで Capybara が利用可能になります。
@@ -351,7 +351,7 @@ end
 
 ### Selenium
 
-現在、Capybara は [Selenium 3.5以上(Webdriver)](http://docs.seleniumhq.org/docs/01_introducing_selenium.jsp#selenium-2-aka-selenium-webdriver) をサポートしています。Selenium を利用するためには、`selenium-webdriver` gem をインストールする必要があります。bundler を使っているのなら Gemfile にそれを追加しましょう。
+現在、Capybara は [Selenium 3.5以上(Webdriver)](https://www.selenium.dev/projects/) をサポートしています。Selenium を利用するためには、`selenium-webdriver` gem をインストールする必要があります。bundler を使っているのなら Gemfile にそれを追加しましょう。
 
 Capybara は Selenium を使用する名前付きのドライバを数多く用意しています。それらが以下です:
 
@@ -370,7 +370,7 @@ Capybara は Selenium を使用する名前付きのドライバを数多く用�
 
 ## DSL
 
-完全なリファレンスは [rubydoc.info](http://rubydoc.info/github/jnicklas/capybara/master) で利用可能です。
+完全なリファレンスは [rubydoc.info](https://rubydoc.info/github/teamcapybara/capybara/master) で利用可能です。
 
 **注釈: デフォルトでは、Capybara は visible 要素のみを検索します。実際のユーザーは目に見えない要素を操作することができないためです。**
 
@@ -378,7 +378,7 @@ Capybara は Selenium を使用する名前付きのドライバを数多く用�
 
 ### Navigating
 
-他のページに遷移するメソッドとして<tt>[visit](http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Session#visit-instance_method)</tt>が使えます。
+他のページに遷移するメソッドとして<tt>[visit](https://rubydoc.info/github/teamcapybara/capybara/master/Capybara/Session#visit-instance_method)</tt>が使えます。
 
 ```ruby
 visit('/projects')
@@ -395,7 +395,7 @@ expect(current_path).to eq(post_comments_path(post))
 
 ### Clicking links and buttons
 
-フルのリファレンスはこちら: [Capybara::Node::Actions](http://rubydoc.info/github/teamcapybara/capybara/master/Capybara/Node/Actions)
+フルのリファレンスはこちら: [Capybara::Node::Actions](https://rubydoc.info/github/teamcapybara/capybara/master/Capybara/Node/Actions)
 
 リンクやボタンを押してwebアプリと通信することが出来ます。Capybara は自動でリダイレクトに対応し、ボタンに関連するフォームをサブミットします。
 
@@ -767,7 +767,7 @@ visit('http://www.google.com')
 Capybara.run_server = false
 ```
 
-## Using the sessions manually
+## Using sessions
 
 Capybara は名前付きセッション (指定されていない場合は `:default`) を扱うことができ、複数のセッションが同じドライバとテストアプリのインスタンスを使って通信できるようにします。もし今使用しているドライバとテストアプリのインスタンスを使用している特定の名前のセッションが見つからない場合、今使用しているドライバを使用して新しいセッションが作成されます。
 

@@ -296,14 +296,14 @@ class BlogTest < ActionDispatch::IntegrationTest
   end
 
   test 'shows blog posts' do
-    # ... このテストは Seleniumu によって実行される ...
+    # ... このテストは Selenium によって実行される ...
   end
 end
 ```
 
 ## Capybara を Minitest::Spec と使う
 
-Minitest 用の上記手順に従った上で、さらに capybar/minitest/spec を require します。
+Minitest 用の上記手順に従った上で、さらに capybara/minitest/spec を require します。
 
 ```ruby
 page.must_have_content('Important!')
@@ -374,7 +374,7 @@ Capybara は Selenium を使用する名前付きのドライバを数多く用�
 
 **注釈: デフォルトでは、Capybara は visible 要素のみを検索します。実際のユーザーは目に見えない要素を操作することができないためです。**
 
-**注釈:** Capybara での全ての検索は case sensitive です。これは、case insensivity をサポートしていない XPath を大量に使っているためです
+**注釈:** Capybara での全ての検索は case sensitive です。これは、case insensitivity をサポートしていない XPath を大量に使っているためです
 
 ### Navigating
 

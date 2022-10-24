@@ -296,7 +296,7 @@ class BlogTest < ActionDispatch::IntegrationTest
   end
 
   test 'shows blog posts' do
-    # ... このテストは Seleniumu によって実行される ...
+    # ... このテストは Selenium によって実行される ...
   end
 end
 ```

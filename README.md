@@ -303,7 +303,7 @@ end
 
 ## Capybara を Minitest::Spec と使う
 
-Minitest 用の上記手順に従った上で、さらに capybar/minitest/spec を require します。
+Minitest 用の上記手順に従った上で、さらに capybara/minitest/spec を require します。
 
 ```ruby
 page.must_have_content('Important!')
